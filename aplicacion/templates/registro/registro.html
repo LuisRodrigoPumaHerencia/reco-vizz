@@ -1,0 +1,68 @@
+{% extends "../navBar/navBar.html" %}
+{% load static %}
+
+{% block titulo %} Registro Usuario {% endblock %}
+{% block contenido %}
+<!DOCTYPE html>
+<html lang="es-PE">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Alumno Nuevo</title>
+        
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
+        <!<!-- Estilos Propios -->
+        <link rel="stylesheet" type="text/css" href=" {% static 'css/index.css' %}">
+        <!<!-- FONTAWESOME -->
+        <script src="https://kit.fontawesome.com/c2a0f18374.js" crossorigin="anonymous"></script>
+        
+    </head>
+    <body> 
+    <br>
+        <!-- Start Menu -->
+        <div class="d-flex justify-content-center mt-5">
+            <div class="tarjeta card col-md-5" id="formServPrest">
+                <div class="headerCard card-heading" align="center">
+                    <h2 class="headerCard headerCard2">Registrar Usuario</h2>
+                </div>
+                <div class="card-body bodyCard">
+                    <form class="needs-validation" enctype="multipart/form-data" method="post" novalidate>
+                        
+                        {% csrf_token %}
+                        {% for campo in formulario %}
+                        <div class="input-group row mt-2">
+                            <div class="form-group pt-2" style="text-align: -webkit-center;">
+                                <div class="col-md-8 col-sm-8">
+                                    <label><strong>{{ campo.label }}</strong></label>
+                                    {% if "Edad" == campo.label %}
+                                    <input type="number" class="form-control" placeholder="Ingrese la edad" name="{{ campo.name }}" required>
+                                    {% elif "Correo" == campo.label %}
+                                    <input aria-describedby="helpId" type="email" class="form-control" placeholder="example@gmail.com"  name="{{ campo.name }}" required>
+                                    {% elif "Contraseña" == campo.label %}
+                                    <input aria-describedby="helpId" type="password" class="form-control" placeholder="{{ campo.label }}" name="{{ campo.name }}" required>
+                                    {% else%} 
+                                    <input aria-describedby="helpId" type="{{ campo.field.widget.input_type }}" class="form-control" placeholder="{{ campo.label }}"  name="{{ campo.name }}" required>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    
+                            <div class="row justify-content-center">
+                                <div class="col-md-6 col-sm-6 text-center mt-4">
+                                    <button type="reset" href="" class="btn btn-danger"><i class="fa-solid fa-xmark"></i> <b>Cancelar</b></button>
+                                </div> 
+                                <div class="col-md-5 col-sm-5 text-center mt-4">
+                                    <button type="submit" value="Enviar Información" class="btn btn-success"><i class="fa-solid fa-check"></i> <b>Agregar</b></button>
+                                </div>
+                            </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <!-- VALIDADCION -->                    
+        <script src=" {% static '/js/index.js' %}"></script>
+    </body>
+</html>
+{% endblock %}
