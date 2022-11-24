@@ -46,7 +46,7 @@ def inicioSesion(request):
                 persona = Persona.objects.get(correo=request.POST['email'])
                 if persona != None:
                     if check_password_hash(persona.contrasena, request.POST['password']):
-                        return redirect('index')
+                        return redirect('autentificacion')
                     else: 
                         return redirect('inicioSesion')
                 else:
@@ -58,4 +58,17 @@ def inicioSesion(request):
 
     form = FormWithCaptcha()
     return render(request, 'inicioSesion/inicioSesion.html',{'form':form})
+
+def autentifiacion(request):
+    if request.method == 'POST':
+        form = FormWithCaptcha(request.POST)
+        if form.is_valid():
+            return redirect('lista')
+        else:
+            return redirect('autentificacion')
+
+    return render(request, 'inicioSesion/autentificacion.html',{'form':form})
+
+def registroVoz(request):
+    return render(request, 'registro/registroVoz.html')
 
